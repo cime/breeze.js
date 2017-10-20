@@ -3832,6 +3832,10 @@ var EntityAspect = (function () {
     var em = this.entityManager;
     var needsSave = true;
 
+    if (entityState === EntityState.Deleted || entityState === EntityState.Detached) {
+        cascadeDelete(entity);
+    }
+
     this.entityManager.beforeEntityStateChanged.publish({ entityState: entityState, entity: entity });    
 
     if (entityState === EntityState.Unchanged) {
@@ -3869,6 +3873,22 @@ var EntityAspect = (function () {
     this.entityState = entityState;
     em._notifyStateChange(entity, needsSave);
     return true;
+  }
+
+  function cascadeDelete(entity) {
+    var entityType = entity.entityType;
+    var navigationProperties = entityType.navigationProperties.filter(function(navigationProperty) {
+      return !navigationProperty.isScalar && navigationProperty.hasOrphanDelete;
+    });
+
+    navigationProperties.forEach(function(navigationProperty) {
+      var propertyValue = entity[navigationProperty.name];
+      propertyValue.slice().reverse().forEach(function(childEntity) {
+        if (childEntity.entityAspect.entityState !== EntityState.Deleted && childEntity.entityAspect.entityState !== EntityState.Detached) {
+          childEntity.entityAspect.setDeleted();
+        }
+      });
+    });
   }
 
   function clearOriginalValues(target) {
