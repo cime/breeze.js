@@ -65,6 +65,7 @@ var EntityManager = (function () {
 
     updateWithConfig(this, config, true);
 
+    this.beforeEntityStateChanged = new Event("beforeEntityStateChanged", this);
     this.entityChanged = new Event("entityChanged", this);
     this.validationErrorsChanged = new Event("validationErrorsChanged", this);
     this.hasChangesChanged = new Event("hasChangesChanged", this);
@@ -199,6 +200,7 @@ var EntityManager = (function () {
       });
   });
 
+  @event beforeEntityStateChanged
   @event entityChanged
   @param entityAction {EntityAction} The {{#crossLink "EntityAction"}}{{/crossLink}} that occured.
   @param entity {Object} The entity that changed.  If this is null, then all entities in the entityManager were affected.

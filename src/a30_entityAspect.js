@@ -353,6 +353,9 @@ var EntityAspect = (function () {
     var entity = this.entity;
     var em = this.entityManager;
     var needsSave = true;
+
+    this.entityManager.beforeEntityStateChanged.publish({ entityState: entityState, entity: entity });    
+
     if (entityState === EntityState.Unchanged) {
       clearOriginalValues(entity);
       delete this.hasTempKey;
