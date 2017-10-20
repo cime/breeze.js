@@ -974,6 +974,7 @@ var CsdlMetadataParser = (function () {
     });
 
     var isScalar = toEnd.multiplicity !== "*";
+    var hasOrphanDelete = toEnd.hasOrphanDelete;
     var dataType = parseTypeNameWithSchema(toEnd.type, schema).typeName;
 
     var constraint = association.referentialConstraint;
@@ -995,7 +996,8 @@ var CsdlMetadataParser = (function () {
       nameOnServer: csdlProperty.name,
       entityTypeName: dataType,
       isScalar: isScalar,
-      associationName: association.name
+      associationName: association.name,
+      hasOrphanDelete: hasOrphanDelete
     };
 
     if (constraint) {
@@ -2760,6 +2762,7 @@ var NavigationProperty = (function () {
         .whereParam("nameOnServer").isString().isOptional()
         .whereParam("entityTypeName").isString()
         .whereParam("isScalar").isBoolean().isOptional().withDefault(true)
+        .whereParam("hasOrphanDelete").isBoolean().isOptional().withDefault(false)
         .whereParam("associationName").isString().isOptional()
         .whereParam("foreignKeyNames").isArray().isString().isOptional().withDefault([])
         .whereParam("foreignKeyNamesOnServer").isArray().isString().isOptional().withDefault([])

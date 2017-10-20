@@ -3831,6 +3831,13 @@ var EntityAspect = (function () {
     var entity = this.entity;
     var em = this.entityManager;
     var needsSave = true;
+
+    if (entityState === EntityState.Deleted || entityState === EntityState.Detached) {
+        cascadeDelete(entity);
+    }
+
+    this.entityManager.beforeEntityStateChanged.publish({ entityState: entityState, entity: entity });    
+
     if (entityState === EntityState.Unchanged) {
       clearOriginalValues(entity);
       delete this.hasTempKey;
@@ -3866,6 +3873,22 @@ var EntityAspect = (function () {
     this.entityState = entityState;
     em._notifyStateChange(entity, needsSave);
     return true;
+  }
+
+  function cascadeDelete(entity) {
+    var entityType = entity.entityType;
+    var navigationProperties = entityType.navigationProperties.filter(function(navigationProperty) {
+      return !navigationProperty.isScalar && navigationProperty.hasOrphanDelete;
+    });
+
+    navigationProperties.forEach(function(navigationProperty) {
+      var propertyValue = entity[navigationProperty.name];
+      propertyValue.slice().reverse().forEach(function(childEntity) {
+        if (childEntity.entityAspect.entityState !== EntityState.Deleted && childEntity.entityAspect.entityState !== EntityState.Detached) {
+          childEntity.entityAspect.setDeleted();
+        }
+      });
+    });
   }
 
   function clearOriginalValues(target) {
@@ -7341,6 +7364,7 @@ var CsdlMetadataParser = (function () {
     });
 
     var isScalar = toEnd.multiplicity !== "*";
+    var hasOrphanDelete = toEnd.hasOrphanDelete;
     var dataType = parseTypeNameWithSchema(toEnd.type, schema).typeName;
 
     var constraint = association.referentialConstraint;
@@ -7362,7 +7386,8 @@ var CsdlMetadataParser = (function () {
       nameOnServer: csdlProperty.name,
       entityTypeName: dataType,
       isScalar: isScalar,
-      associationName: association.name
+      associationName: association.name,
+      hasOrphanDelete: hasOrphanDelete
     };
 
     if (constraint) {
@@ -9127,6 +9152,7 @@ var NavigationProperty = (function () {
         .whereParam("nameOnServer").isString().isOptional()
         .whereParam("entityTypeName").isString()
         .whereParam("isScalar").isBoolean().isOptional().withDefault(true)
+        .whereParam("hasOrphanDelete").isBoolean().isOptional().withDefault(false)
         .whereParam("associationName").isString().isOptional()
         .whereParam("foreignKeyNames").isArray().isString().isOptional().withDefault([])
         .whereParam("foreignKeyNamesOnServer").isArray().isString().isOptional().withDefault([])
@@ -13019,6 +13045,7 @@ var EntityManager = (function () {
 
     updateWithConfig(this, config, true);
 
+    this.beforeEntityStateChanged = new Event("beforeEntityStateChanged", this);
     this.entityChanged = new Event("entityChanged", this);
     this.validationErrorsChanged = new Event("validationErrorsChanged", this);
     this.hasChangesChanged = new Event("hasChangesChanged", this);
@@ -13153,6 +13180,7 @@ var EntityManager = (function () {
       });
   });
 
+  @event beforeEntityStateChanged
   @event entityChanged
   @param entityAction {EntityAction} The {{#crossLink "EntityAction"}}{{/crossLink}} that occured.
   @param entity {Object} The entity that changed.  If this is null, then all entities in the entityManager were affected.

@@ -437,6 +437,7 @@ export namespace core {
         serviceName: string;
         validationOptions: ValidationOptions;
 
+        beforeEntityStateChanged: EntityBeforeStateChangedEvent;
         entityChanged: EntityChangedEvent;
         hasChangesChanged: HasChangesChangedEvent;
         validationErrorsChanged: ValidationErrorsChangedEvent;
@@ -555,8 +556,17 @@ export namespace core {
         args: Object;
     }
 
+    export class EntityBeforeStateChangedEventArgs {
+        entity: Entity;
+        entityState: EntityState
+    }
+
     export class EntityChangedEvent extends core.Event {
         subscribe(callback?: (data: EntityChangedEventArgs) => void): number;
+    }
+
+    export class EntityBeforeStateChangedEvent extends core.Event {
+        subscribe(callback?: (data: EntityBeforeStateChangedEventArgs) => void): number;
     }
 
     export class HasChangesChangedEventArgs {
@@ -804,6 +814,7 @@ export namespace core {
         isDataProperty: boolean;
         isNavigationProperty: boolean;
         isScalar: boolean;
+        hasOrphanDelete: boolean;
         name: string;
         nameOnServer: string;
         displayName: string;

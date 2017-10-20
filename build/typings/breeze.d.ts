@@ -438,6 +438,7 @@ declare namespace breeze {
         serviceName: string;
         validationOptions: ValidationOptions;
 
+        beforeEntityStateChanged: EntityBeforeStateChangedEvent;
         entityChanged: EntityChangedEvent;
         hasChangesChanged: HasChangesChangedEvent;
         validationErrorsChanged: ValidationErrorsChangedEvent;
@@ -556,8 +557,17 @@ declare namespace breeze {
         args: Object;
     }
 
+    export class EntityBeforeStateChangedEventArgs {
+        entity: Entity;
+        entityState: EntityState
+    }
+
     export class EntityChangedEvent extends breeze.core.Event {
         subscribe(callback?: (data: EntityChangedEventArgs) => void): number;
+    }
+
+    export class EntityBeforeStateChangedEvent extends breeze.core.Event {
+        subscribe(callback?: (data: EntityBeforeStateChangedEventArgs) => void): number;
     }
 
     export class HasChangesChangedEventArgs {
@@ -805,6 +815,7 @@ declare namespace breeze {
         isDataProperty: boolean;
         isNavigationProperty: boolean;
         isScalar: boolean;
+        hasOrphanDelete: boolean;
         name: string;
         nameOnServer: string;
         displayName: string;
