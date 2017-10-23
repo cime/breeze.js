@@ -3832,11 +3832,11 @@ var EntityAspect = (function () {
     var em = this.entityManager;
     var needsSave = true;
 
+    this.entityManager.beforeEntityStateChanged.publish({ entityState: entityState, entity: entity });    
+
     if (entityState === EntityState.Deleted || entityState === EntityState.Detached) {
         cascadeDelete(entity);
     }
-
-    this.entityManager.beforeEntityStateChanged.publish({ entityState: entityState, entity: entity });    
 
     if (entityState === EntityState.Unchanged) {
       clearOriginalValues(entity);
