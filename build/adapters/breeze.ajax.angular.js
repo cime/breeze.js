@@ -5,11 +5,11 @@
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -100,7 +100,7 @@
     if (requestInfo.config) { // exists unless requestInterceptor killed it.
       var prom = this.$http(requestInfo.config);
       if (prom.success) {
-        // response for ng < 1.6        
+        // response for ng < 1.6
         prom.success(requestInfo.success).error(requestInfo.error);
       } else {
         // response for ng 1.6+

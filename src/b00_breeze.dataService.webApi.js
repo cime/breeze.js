@@ -2,11 +2,11 @@
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -77,10 +77,10 @@
         if (dk.entityTypeName) return dk; // it's already lower case
         var entityTypeName = MetadataStore.normalizeTypeName(dk.EntityTypeName);
         // NOTE the dk.KeyValue => keyValues transition - needed because we are deserializing an .NET EntityKey
-        return { entityTypeName: entityTypeName, keyValues: dk.KeyValue }; 
+        return { entityTypeName: entityTypeName, keyValues: dk.KeyValue };
       });
     }
-    
+
     return { entities: entities, keyMappings: keyMappings, deletedKeys: deletedKeys };
   };
 

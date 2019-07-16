@@ -16355,11 +16355,11 @@ breeze.SaveOptions = SaveOptions;
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -16450,7 +16450,7 @@ breeze.SaveOptions = SaveOptions;
     if (requestInfo.config) { // exists unless requestInterceptor killed it.
       var prom = this.$http(requestInfo.config);
       if (prom.success) {
-        // response for ng < 1.6        
+        // response for ng < 1.6
         prom.success(requestInfo.success).error(requestInfo.error);
       } else {
         // response for ng 1.6+
@@ -16544,11 +16544,11 @@ breeze.SaveOptions = SaveOptions;
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -16660,11 +16660,11 @@ breeze.SaveOptions = SaveOptions;
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -16695,11 +16695,11 @@ breeze.SaveOptions = SaveOptions;
   proto._createChangeRequestInterceptor = abstractDsaProto._createChangeRequestInterceptor;
   proto.headers = { "DataServiceVersion": "2.0" };
 
-  // Absolute URL is the default as of Breeze 1.5.5.  
+  // Absolute URL is the default as of Breeze 1.5.5.
   // To use relative URL (like pre-1.5.5), add adapterInstance.relativeUrl = true:
   //
   //     var ds = breeze.config.initializeAdapterInstance("dataService", "webApiOData");
-  //     ds.relativeUrl = true; 
+  //     ds.relativeUrl = true;
   //
   // To use custom url construction, add adapterInstance.relativeUrl = myfunction(dataService, url):
   //
@@ -16714,9 +16714,9 @@ breeze.SaveOptions = SaveOptions;
     // only prefix with serviceName if not already on the url
     var base = (core.stringStartsWith(url, serviceName)) ? '' : serviceName;
     // If no protocol, turn base into an absolute URI
-    if (window && serviceName.indexOf('//') < 0) { 
+    if (window && serviceName.indexOf('//') < 0) {
       // no protocol; make it absolute
-      base = window.location.protocol + '//' + window.location.host + 
+      base = window.location.protocol + '//' + window.location.host +
             (core.stringStartsWith(serviceName, '/') ? '' : '/') +
             base;
     }
@@ -17161,11 +17161,11 @@ breeze.SaveOptions = SaveOptions;
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -17236,10 +17236,10 @@ breeze.SaveOptions = SaveOptions;
         if (dk.entityTypeName) return dk; // it's already lower case
         var entityTypeName = MetadataStore.normalizeTypeName(dk.EntityTypeName);
         // NOTE the dk.KeyValue => keyValues transition - needed because we are deserializing an .NET EntityKey
-        return { entityTypeName: entityTypeName, keyValues: dk.KeyValue }; 
+        return { entityTypeName: entityTypeName, keyValues: dk.KeyValue };
       });
     }
-    
+
     return { entities: entities, keyMappings: keyMappings, deletedKeys: deletedKeys };
   };
 
@@ -17271,11 +17271,11 @@ breeze.SaveOptions = SaveOptions;
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -17567,11 +17567,11 @@ breeze.SaveOptions = SaveOptions;
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -17826,11 +17826,11 @@ breeze.SaveOptions = SaveOptions;
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";
@@ -17868,11 +17868,11 @@ breeze.SaveOptions = SaveOptions;
   if (typeof breeze === "object") {
     factory(breeze);
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-    // CommonJS or Node: hard-coded dependency on "breeze-client"
-    factory(require("breeze-client"));
+    // CommonJS or Node: hard-coded dependency on "@cime/breeze-client"
+    factory(require("@cime/breeze-client"));
   } else if (typeof define === "function" && define["amd"]) {
-    // AMD anonymous module with hard-coded dependency on "breeze-client"
-    define(["breeze-client"], factory);
+    // AMD anonymous module with hard-coded dependency on "@cime/breeze-client"
+    define(["@cime/breeze-client"], factory);
   }
 }(function (breeze) {
   "use strict";

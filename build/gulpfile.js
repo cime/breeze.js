@@ -1,8 +1,8 @@
 // Build for breeze.js
 
 // include gulp
-var gulp = require('gulp'); 
- 
+var gulp = require('gulp');
+
 // include plug-ins
 // var jshint = require('gulp-jshint');
 var concat  = require('gulp-concat');
@@ -15,7 +15,7 @@ var through = require('through');
 var eventStream = require('event-stream');
 var replace = require('gulp-replace');
 var handlebars = require('gulp-compile-handlebars');
- 
+
 var srcDir = '../src/';
 var destDir = './';
 var yuidocDestDir  = '../docs/api-docs/';
@@ -59,7 +59,7 @@ gulp.task('copyForTests', ['minify'], function() {
 gulp.task('yuidoc-full', ['yuidoc-clean'], function() {
   return gulp.src( mapPath(srcDir, fileNames))
       .pipe(concat('foo'))  // just needed a method that would get n -> 1 would like something smaller.
-      .pipe(shell(['yuidoc --themedir ' + yuidocThemeDir + ' --outdir ' + yuidocDestDir + ' ' + "."], 
+      .pipe(shell(['yuidoc --themedir ' + yuidocThemeDir + ' --outdir ' + yuidocDestDir + ' ' + "."],
          { cwd: srcDir}));
 });
 
@@ -84,7 +84,7 @@ gulp.task('yuidoc', function() {
         this.queue(null);
       }))
       */
-      .pipe(shell(['yuidoc --themedir ' + yuidocThemeDir + ' --outdir ' + yuidocDestDir + ' ' + "."], 
+      .pipe(shell(['yuidoc --themedir ' + yuidocThemeDir + ' --outdir ' + yuidocDestDir + ' ' + "."],
          { cwd: srcDir}));
 });
 
@@ -128,7 +128,7 @@ function buildTypescriptDefinition(filename, modules) {
     // Remove breeze prefix from all types
     stream = stream.pipe(replace(/breeze\./g, ''));
   }
-  
+
   return stream
     .pipe(rename(filename))
     .pipe(gulp.dest(destDir + 'typings'));
